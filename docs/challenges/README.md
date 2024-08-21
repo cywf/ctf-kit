@@ -19,7 +19,7 @@ CTF challenges are typically categorized based on the skills and knowledge they 
 
 ## 3. Challenge Type Summaries
 
-### Web Exploitation
+### `Web Exploitation`
 Web exploitation challenges involve discovering and exploiting vulnerabilities in web applications. These challenges often require knowledge of web technologies, security principles, and common vulnerabilities.
 
 **Common tasks include**:
@@ -29,7 +29,7 @@ Web exploitation challenges involve discovering and exploiting vulnerabilities i
 - Directory Traversal
 - Server-Side Request Forgery (SSRF)
 
-### Cryptography
+### `Cryptography`
 Cryptography challenges test your ability to understand and break encryption schemes. These challenges require knowledge of various cryptographic algorithms and techniques, as well as the ability to think critically about how data is secured and how it might be compromised.
 
 **Common tasks include**:
@@ -38,7 +38,7 @@ Cryptography challenges test your ability to understand and break encryption sch
 - Understanding and exploiting cryptographic flaws
 - Implementing or reversing cryptographic algorithms
 
-### Forensics
+### `Forensics`
 Forensics challenges involve analyzing data, such as files or network traffic, to uncover hidden information or reconstruct events. These challenges require attention to detail and proficiency with forensic tools and techniques.
 
 **Common tasks include**:
@@ -47,7 +47,7 @@ Forensics challenges involve analyzing data, such as files or network traffic, t
 - Investigating log files
 - Examining network traffic captures
 
-### Reverse Engineering
+### `Reverse Engineering`
 Reverse engineering challenges require you to analyze and understand the inner workings of compiled software. These challenges often involve disassembling or decompiling binaries to uncover hidden functionality or bypass protections.
 
 **Common tasks include**:
@@ -56,7 +56,7 @@ Reverse engineering challenges require you to analyze and understand the inner w
 - Identifying and patching vulnerabilities
 - Understanding obfuscation techniques
 
-### Miscellaneous
+### `Miscellaneous`
 The miscellaneous category encompasses challenges that don't fit neatly into the other categories. These can include anything from steganography and puzzles to social engineering scenarios.
 
 **Types of challenges might include**:
