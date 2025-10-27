@@ -204,6 +204,7 @@ sudo apt-get install smbclient enum4linux smbmap samba-common-bin
 
 **Issue:** Permission denied when running scripts
 ```bash
+cd scripts/Enumeration
 chmod +x web_server_enum.sh
 chmod +x smb_share_enum.sh
 ```

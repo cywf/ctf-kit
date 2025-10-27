@@ -112,5 +112,4 @@ This documentation is part of the CTF-Kit repository and is covered by the same 
 
 ---
 
-*Last updated: 2024*
 *For the most current information, always refer to the repository on GitHub*

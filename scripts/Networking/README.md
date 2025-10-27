@@ -114,6 +114,7 @@ sudo apt-get install nmap
 
 **Issue:** Permission denied
 ```bash
+cd scripts/Networking
 chmod +x basic_nmap_scan.sh
 chmod +x advanced_nmap_scan.sh
 ```
