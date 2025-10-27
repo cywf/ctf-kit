@@ -1,25 +1,35 @@
-# Configuration for actions/labeler
+# Configuration for actions/labeler v5
 # Labels PRs based on the files changed
 
 documentation:
-  - '**/*.md'
-  - 'docs/**/*'
+  - changed-files:
+    - any-glob-to-any-file: '**/*.md'
+  - changed-files:
+    - any-glob-to-any-file: 'docs/**/*'
 
 scripts:
-  - 'scripts/**/*.sh'
-  - 'scripts/**/*.py'
+  - changed-files:
+    - any-glob-to-any-file: 'scripts/**/*.sh'
+  - changed-files:
+    - any-glob-to-any-file: 'scripts/**/*.py'
 
 networking:
-  - 'scripts/Networking/**/*'
+  - changed-files:
+    - any-glob-to-any-file: 'scripts/Networking/**/*'
 
 enumeration:
-  - 'scripts/Enumeration/**/*'
+  - changed-files:
+    - any-glob-to-any-file: 'scripts/Enumeration/**/*'
 
 github-actions:
-  - '.github/workflows/**/*'
-  - '.github/**/*.yml'
+  - changed-files:
+    - any-glob-to-any-file: '.github/workflows/**/*'
+  - changed-files:
+    - any-glob-to-any-file: '.github/**/*.yml'
 
 dependencies:
-  - 'requirements.txt'
-  - 'package.json'
-  - 'Gemfile'
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'requirements.txt'
+      - 'package.json'
+      - 'Gemfile'
