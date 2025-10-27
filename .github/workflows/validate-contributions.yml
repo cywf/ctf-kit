@@ -10,6 +10,8 @@ jobs:
   validate-scripts:
     name: Validate Shell Scripts
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code
@@ -39,6 +41,8 @@ jobs:
   validate-markdown:
     name: Validate Markdown
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code
@@ -60,6 +64,8 @@ jobs:
   validate-structure:
     name: Validate Repository Structure
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code
@@ -94,6 +100,8 @@ jobs:
   security-check:
     name: Security Check
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code
