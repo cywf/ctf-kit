@@ -1,0 +1,25 @@
+# Configuration for actions/labeler
+# Labels PRs based on the files changed
+
+documentation:
+  - '**/*.md'
+  - 'docs/**/*'
+
+scripts:
+  - 'scripts/**/*.sh'
+  - 'scripts/**/*.py'
+
+networking:
+  - 'scripts/Networking/**/*'
+
+enumeration:
+  - 'scripts/Enumeration/**/*'
+
+github-actions:
+  - '.github/workflows/**/*'
+  - '.github/**/*.yml'
+
+dependencies:
+  - 'requirements.txt'
+  - 'package.json'
+  - 'Gemfile'
