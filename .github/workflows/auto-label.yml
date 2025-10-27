@@ -1,0 +1,82 @@
+name: Auto Label PRs
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Label based on file changes
+        uses: actions/labeler@v5
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Label based on branch name
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const branchName = context.payload.pull_request.head.ref.toLowerCase();
+            const labels = [];
+            
+            // Label based on branch naming convention
+            if (branchName.includes('ctf') || branchName.match(/\d{4}$/)) {
+              labels.push('ctf-event');
+            }
+            
+            if (branchName.includes('feature')) {
+              labels.push('enhancement');
+            }
+            
+            if (branchName.includes('fix') || branchName.includes('bug')) {
+              labels.push('bug');
+            }
+            
+            if (branchName.includes('docs') || branchName.includes('documentation')) {
+              labels.push('documentation');
+            }
+            
+            if (branchName.includes('script')) {
+              labels.push('scripts');
+            }
+            
+            // Add labels if any were determined
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                labels: labels
+              });
+            }
+
+      - name: Check if scripts were modified
+        id: check-scripts
+        run: |
+          if git diff --name-only origin/main...HEAD | grep -q "^scripts/"; then
+            echo "scripts_modified=true" >> $GITHUB_OUTPUT
+          else
+            echo "scripts_modified=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Label script PRs
+        if: steps.check-scripts.outputs.scripts_modified == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              labels: ['scripts']
+            });

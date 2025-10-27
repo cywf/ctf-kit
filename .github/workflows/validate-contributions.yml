@@ -1,0 +1,132 @@
+name: Validate Contributions
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  validate-scripts:
+    name: Validate Shell Scripts
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: Run ShellCheck on all shell scripts
+        run: |
+          echo "Checking shell scripts..."
+          find scripts -type f -name "*.sh" -exec shellcheck -S warning {} + || true
+          echo "ShellCheck completed (warnings only)"
+
+      - name: Verify script permissions
+        run: |
+          echo "Checking script permissions..."
+          NON_EXEC=$(find scripts -type f -name "*.sh" ! -executable)
+          if [ -n "$NON_EXEC" ]; then
+            echo "⚠️  Warning: The following scripts are not executable:"
+            echo "$NON_EXEC"
+            echo "Run: chmod +x <script>"
+          else
+            echo "✓ All shell scripts are executable"
+          fi
+
+  validate-markdown:
+    name: Validate Markdown
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install markdownlint
+        run: npm install -g markdownlint-cli
+
+      - name: Run markdownlint
+        run: |
+          markdownlint '**/*.md' --ignore node_modules || true
+          echo "Markdown validation completed (warnings only)"
+
+  validate-structure:
+    name: Validate Repository Structure
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check required directories
+        run: |
+          echo "Checking repository structure..."
+          REQUIRED_DIRS=("docs" "scripts" "scripts/Networking" "scripts/Enumeration" ".github")
+          
+          for dir in "${REQUIRED_DIRS[@]}"; do
+            if [ -d "$dir" ]; then
+              echo "✓ Found: $dir"
+            else
+              echo "⚠️  Missing: $dir"
+            fi
+          done
+
+      - name: Check required files
+        run: |
+          echo "Checking required files..."
+          REQUIRED_FILES=("README.md" "LICENSE" "CONTRIBUTING.md" ".gitignore")
+          
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✓ Found: $file"
+            else
+              echo "⚠️  Missing: $file"
+            fi
+          done
+
+  security-check:
+    name: Security Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for hardcoded credentials
+        run: |
+          echo "Scanning for potential hardcoded credentials..."
+          
+          # Check for common credential patterns
+          if grep -rEi "(password|passwd|pwd|secret|api[-_]?key|token)\s*=\s*['\"][^'\"]{8,}" scripts/ --exclude="*.md" 2>/dev/null; then
+            echo "⚠️  Warning: Potential hardcoded credentials found"
+            exit 1
+          else
+            echo "✓ No hardcoded credentials detected"
+          fi
+
+      - name: Check for sensitive file patterns
+        run: |
+          echo "Checking for sensitive files..."
+          SENSITIVE_FILES=$(find . -type f \( -name "*.key" -o -name "*.pem" -o -name "*credentials*" -o -name "*password*" \) ! -path "./.git/*" ! -name "PULL_REQUEST_TEMPLATE.md" ! -name "CONTRIBUTING.md")
+          
+          if [ -n "$SENSITIVE_FILES" ]; then
+            echo "⚠️  Warning: Potential sensitive files found:"
+            echo "$SENSITIVE_FILES"
+          else
+            echo "✓ No sensitive files detected"
+          fi

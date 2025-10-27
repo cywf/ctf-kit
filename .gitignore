@@ -1,0 +1,76 @@
+# Scan Results
+scan_results/
+enum_results/
+
+# CTF Working Directories
+**/flags.txt
+**/loot/
+**/exploits/temp/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+.venv
+venv/
+ENV/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+
+# Temporary Files
+*.tmp
+*.temp
+.cache/
+
+# Tool-specific
+.nmap_output/
+.msf4/
+.metasploit/
+
+# OS-specific
+Thumbs.db
+.DS_Store
+
+# Secrets and Credentials
+*.key
+*.pem
+*.crt
+credentials.txt
+passwords.txt
+secrets.txt
+.env
+
+# CTF-specific
+writeups/drafts/
+notes/private/
