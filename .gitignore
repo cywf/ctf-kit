@@ -74,3 +74,16 @@ secrets.txt
 # CTF-specific
 writeups/drafts/
 notes/private/
+
+# Node.js
+node_modules/
+package-lock.json
+
+# Astro
+.astro/
+dist/
+
+# Site build artifacts
+site/dist/
+site/.astro/
+site/node_modules/

@@ -1,0 +1,37 @@
+[
+  {
+    "path": "README.md",
+    "name": "README.md",
+    "description": "Script: README.md"
+  },
+  {
+    "path": "Networking/README.md",
+    "name": "README.md",
+    "description": "Script: README.md"
+  },
+  {
+    "path": "Networking/advanced_nmap_scan.sh",
+    "name": "advanced_nmap_scan.sh",
+    "description": "############################################################################"
+  },
+  {
+    "path": "Networking/basic_nmap_scan.sh",
+    "name": "basic_nmap_scan.sh",
+    "description": "############################################################################"
+  },
+  {
+    "path": "Enumeration/README.md",
+    "name": "README.md",
+    "description": "Script: README.md"
+  },
+  {
+    "path": "Enumeration/smb_share_enum.sh",
+    "name": "smb_share_enum.sh",
+    "description": "############################################################################"
+  },
+  {
+    "path": "Enumeration/web_server_enum.sh",
+    "name": "web_server_enum.sh",
+    "description": "############################################################################"
+  }
+]

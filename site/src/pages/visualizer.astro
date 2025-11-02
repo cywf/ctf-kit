@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MermaidViewer from '../components/MermaidViewer';
+import { readdir, readFile } from 'node:fs/promises';
+import { join } from 'node:path';
+
+const breadcrumbs = [{ label: 'Visualizer' }];
+
+// Try to read mermaid files
+let diagrams: Array<{ name: string; path: string; content: string }> = [];
+try {
+  const mermaidPath = join(process.cwd(), '..', 'mermaid');
+  const files = await readdir(mermaidPath, { recursive: true, withFileTypes: true });
+  
+  const mmdFiles = files.filter((dirent) => dirent.isFile() && dirent.name.endsWith('.mmd'));
+  
+  diagrams = await Promise.all(
+    mmdFiles.map(async (dirent) => {
+      const filePath = join(dirent.parentPath || (dirent as any).path || '', dirent.name);
+      const content = await readFile(filePath, 'utf-8');
+      return {
+        name: dirent.name.replace('.mmd', ''),
+        path: filePath,
+        content,
+      };
+    })
+  );
+} catch (error) {
+  // Mermaid directory doesn't exist or is empty
+  console.log('No mermaid diagrams found');
+}
+---
+
+<Layout title="Project Visualizer" breadcrumbs={breadcrumbs}>
+  <div class="space-y-6">
+    <div>
+      <h1 class="text-4xl font-bold mb-4">Project Visualizer</h1>
+      <p class="text-lg text-base-content/70">
+        Interactive Mermaid diagrams showing project architecture, workflows, and relationships.
+      </p>
+    </div>
+
+    <MermaidViewer diagrams={diagrams} client:load />
+  </div>
+</Layout>

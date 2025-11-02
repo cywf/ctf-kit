@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StatisticsComponent from '../components/Statistics';
+
+const breadcrumbs = [{ label: 'Statistics' }];
+---
+
+<Layout title="Statistics" breadcrumbs={breadcrumbs}>
+  <h1 class="text-4xl font-bold mb-8">Repository Statistics</h1>
+  <StatisticsComponent client:load />
+</Layout>

@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import DevelopmentBoardComponent from '../components/DevelopmentBoard';
+
+const breadcrumbs = [{ label: 'Development Board' }];
+---
+
+<Layout title="Development Board" breadcrumbs={breadcrumbs}>
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-4xl font-bold">Development Board</h1>
+    <a
+      href="https://github.com/cywf/ctf-kit/projects"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-primary"
+    >
+      View on GitHub
+    </a>
+  </div>
+  <DevelopmentBoardComponent client:load />
+</Layout>
