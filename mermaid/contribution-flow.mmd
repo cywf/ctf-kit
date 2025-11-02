@@ -1,0 +1,26 @@
+graph LR
+    A[CTF-Kit Repository] --> B[Fork Repository]
+    B --> C[Create Branch]
+    C --> D{CTF Event}
+    
+    D --> E[Use Tools & Scripts]
+    E --> F[Document Findings]
+    F --> G[Add Solutions]
+    
+    G --> H{Event Complete?}
+    H -->|No| E
+    H -->|Yes| I[Submit Pull Request]
+    
+    I --> J[Code Review]
+    J --> K{Approved?}
+    K -->|Yes| L[Merge to Main]
+    K -->|No| M[Make Changes]
+    M --> I
+    
+    L --> N[Community Benefits]
+    N --> O[Enhanced Repository]
+    
+    style A fill:#8b5cf6,stroke:#8b5cf6,color:#fff
+    style I fill:#00ffff,stroke:#00ffff,color:#000
+    style L fill:#00ff00,stroke:#00ff00,color:#000
+    style O fill:#ff00ff,stroke:#ff00ff,color:#000

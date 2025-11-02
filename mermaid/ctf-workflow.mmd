@@ -1,0 +1,27 @@
+graph TD
+    A[Start CTF] --> B{Choose Challenge Type}
+    B -->|Web| C[Web Exploitation]
+    B -->|Crypto| D[Cryptography]
+    B -->|Forensics| E[Forensics]
+    B -->|Reversing| F[Reverse Engineering]
+    B -->|Misc| G[Miscellaneous]
+    
+    C --> H[Enumerate & Scan]
+    D --> H
+    E --> H
+    F --> H
+    G --> H
+    
+    H --> I[Find Vulnerability]
+    I --> J{Exploit Successful?}
+    J -->|Yes| K[Capture Flag]
+    J -->|No| L[Try Different Approach]
+    L --> H
+    
+    K --> M[Document Solution]
+    M --> N[Submit Flag]
+    N --> O[End]
+    
+    style A fill:#00ffff,stroke:#00ffff,color:#000
+    style K fill:#00ff00,stroke:#00ff00,color:#000
+    style O fill:#ff00ff,stroke:#ff00ff,color:#000
