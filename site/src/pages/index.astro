@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout title="Home">
+  <!-- Hero Section -->
+  <div class="hero min-h-[50vh] bg-base-200 rounded-lg mb-8">
+    <div class="hero-content text-center">
+      <div class="max-w-4xl">
+        <h1 class="text-5xl font-bold mb-4">Welcome to CTF-Kit</h1>
+        <p class="text-xl mb-6">
+          Your collaborative and evolving resource for Capture The Flag competitions
+        </p>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a href="https://github.com/cywf/ctf-kit/issues" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            View Issues
+          </a>
+          <a href="https://github.com/cywf/ctf-kit/discussions" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            Discussions
+          </a>
+          <a href="https://github.com/cywf/ctf-kit/projects" target="_blank" rel="noopener noreferrer" class="btn btn-accent">
+            Projects
+          </a>
+          <a href="https://github.com/cywf/ctf-kit/releases" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+            Releases
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Introduction -->
+  <div class="grid gap-8 mb-8">
+    <div class="card bg-base-200 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-3xl mb-4">Introduction</h2>
+        <p class="text-lg leading-relaxed">
+          Welcome to the CTF-Kit repository! This project is designed to be a collaborative and evolving resource for anyone interested in participating in Capture The Flag (CTF) competitions. Whether you're a seasoned veteran or a newcomer to the world of CTFs, this repository aims to provide you with the tools, resources, and knowledge you need to succeed.
+        </p>
+      </div>
+    </div>
+
+    <!-- Vision and Goals -->
+    <div class="card bg-base-200 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-3xl mb-4">Vision and Goals</h2>
+        
+        <h3 class="text-2xl font-semibold mb-3">Our Vision</h3>
+        <p class="text-lg leading-relaxed mb-4">
+          The vision for this repository is to become a central hub for CTF learning and collaboration. We aim to create a dynamic space where participants can share their insights, strategies, and resources to help each other improve and grow.
+        </p>
+
+        <h3 class="text-2xl font-semibold mb-3">Goals</h3>
+        <ul class="list-disc list-inside space-y-2 text-lg">
+          <li><strong>Facilitate Collaboration:</strong> Encourage participants to work together, share their findings, and contribute to the collective knowledge base.</li>
+          <li><strong>Improve CTF Strategies:</strong> Through shared experiences and resources, help users develop more effective strategies for tackling various types of CTF challenges.</li>
+          <li><strong>Create a Rich Database:</strong> Build a repository of scripts, tools, and writeups that serve as valuable references for future CTFs.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- How to Use -->
+    <div class="card bg-base-200 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-3xl mb-4">How to Use This Repository</h2>
+        
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-xl font-semibold mb-2">1. Fork the Repository</h3>
+            <p>Start by forking this repository to your own GitHub account.</p>
+          </div>
+          
+          <div>
+            <h3 class="text-xl font-semibold mb-2">2. Create a Branch</h3>
+            <p>When you participate in a CTF, create a new branch in your forked repo. Name the branch after the CTF event you are participating in (e.g., <code class="bg-base-300 px-2 py-1 rounded">metactf-august2024</code>).</p>
+          </div>
+          
+          <div>
+            <h3 class="text-xl font-semibold mb-2">3. Work in Your Branch</h3>
+            <p>Use this branch to document your progress, add scripts, and write up your solutions.</p>
+          </div>
+          
+          <div>
+            <h3 class="text-xl font-semibold mb-2">4. Contribute Back</h3>
+            <p>After the CTF, you can submit a pull request to contribute your findings and improvements back to the main repository.</p>
+          </div>
+        </div>
+
+        <div class="card-actions justify-end mt-6">
+          <a href={`${base}/docs`} class="btn btn-primary">View Documentation</a>
+          <a href="https://github.com/cywf/ctf-kit/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            Contributing Guide
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body">
+          <h3 class="card-title">Start a CTF Branch</h3>
+          <p>Follow our branching strategy to participate in CTF events and contribute your solutions.</p>
+          <div class="card-actions justify-end">
+            <a href={`${base}/docs`} class="btn btn-sm btn-primary">Learn More</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body">
+          <h3 class="card-title">Browse Scripts</h3>
+          <p>Explore our collection of tools and scripts for various CTF challenges.</p>
+          <div class="card-actions justify-end">
+            <a href="https://github.com/cywf/ctf-kit/tree/main/scripts" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">
+              View Scripts
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

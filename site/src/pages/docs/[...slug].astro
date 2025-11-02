@@ -1,0 +1,101 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { readFile, readdir } from 'node:fs/promises';
+import { join } from 'node:path';
+
+export async function getStaticPaths() {
+  const docsPath = join(process.cwd(), '..', 'docs');
+  const allDocs = await readdir(docsPath, { recursive: true, withFileTypes: true });
+  
+  const paths = allDocs
+    .filter((dirent) => dirent.isFile() && dirent.name.endsWith('.md'))
+    .map((dirent) => {
+      const relativePath = join(dirent.parentPath || (dirent as any).path || '', dirent.name)
+        .replace(docsPath, '')
+        .replace(/^\//, '')
+        .replace('.md', '');
+      
+      return {
+        params: { slug: relativePath },
+      };
+    });
+
+  return paths;
+}
+
+const { slug } = Astro.params;
+const slugPath = slug || '';
+
+const docsPath = join(process.cwd(), '..', 'docs');
+const filePath = join(docsPath, `${slugPath}.md`);
+
+let content = '';
+let title: string = 'Documentation';
+try {
+  content = await readFile(filePath, 'utf-8');
+  
+  // Extract title from markdown
+  const titleMatch = content.match(/^#\s+(.+)$/m);
+  if (titleMatch && titleMatch[1]) {
+    title = titleMatch[1];
+  } else {
+    const fallback = slugPath.split('/').pop()?.replace(/-/g, ' ');
+    title = fallback || 'Documentation';
+  }
+} catch (error) {
+  content = `# Document Not Found\n\nThe requested document could not be found.`;
+  title = 'Not Found';
+}
+
+const breadcrumbs = [
+  { label: 'Documentation', href: `${import.meta.env.BASE_URL}/docs` },
+  { label: title },
+];
+
+// Simple markdown to HTML conversion (for basic rendering)
+// In production, you'd want to use a proper markdown parser
+const htmlContent = content
+  .replace(/^### (.+)$/gm, '<h3 class="text-xl font-bold mt-6 mb-3">$1</h3>')
+  .replace(/^## (.+)$/gm, '<h2 class="text-2xl font-bold mt-8 mb-4">$1</h2>')
+  .replace(/^# (.+)$/gm, '<h1 class="text-4xl font-bold mb-6">$1</h1>')
+  .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+  .replace(/\*(.+?)\*/g, '<em>$1</em>')
+  .replace(/`(.+?)`/g, '<code class="bg-base-300 px-2 py-1 rounded text-sm">$1</code>')
+  .replace(/^\- (.+)$/gm, '<li class="ml-4">$1</li>')
+  .replace(/(<li class="ml-4">.*<\/li>\n?)+/g, '<ul class="list-disc list-inside space-y-2 my-4">$&</ul>')
+  .replace(/^\d+\. (.+)$/gm, '<li class="ml-4">$1</li>')
+  .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" class="link link-primary" target="_blank" rel="noopener noreferrer">$1</a>')
+  .replace(/\n\n/g, '</p><p class="mb-4">')
+  .replace(/^(?!<[h\|ul\|li])/gm, '<p class="mb-4">');
+
+const githubUrl = `https://github.com/cywf/ctf-kit/blob/main/docs/${slugPath}.md`;
+---
+
+<Layout title={title} breadcrumbs={breadcrumbs}>
+  <div class="space-y-6">
+    <div class="flex justify-between items-start">
+      <div class="flex-1">
+        <a href={`${import.meta.env.BASE_URL}/docs`} class="btn btn-sm btn-ghost mb-4">
+          ← Back to Docs
+        </a>
+      </div>
+      <a
+        href={githubUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-sm btn-outline gap-2"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+        </svg>
+        Edit on GitHub
+      </a>
+    </div>
+
+    <div class="card bg-base-200 shadow-xl">
+      <div class="card-body prose-dark max-w-none">
+        <div set:html={htmlContent} />
+      </div>
+    </div>
+  </div>
+</Layout>

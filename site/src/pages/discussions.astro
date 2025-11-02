@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import DiscussionsComponent from '../components/Discussions';
+
+const breadcrumbs = [{ label: 'Discussions' }];
+---
+
+<Layout title="Discussions" breadcrumbs={breadcrumbs}>
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-4xl font-bold">Community Discussions</h1>
+    <a
+      href="https://github.com/cywf/ctf-kit/discussions/new"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-primary"
+    >
+      New Discussion
+    </a>
+  </div>
+  <DiscussionsComponent client:load />
+</Layout>
